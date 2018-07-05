@@ -101,7 +101,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(jLabel7);
         jLabel7.setBounds(680, 460, 0, 0);
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("/home/dsp/Documents/SPorts_Club1/images/gym_disks_weight_bodybuilding_118105_1920x1200 (2).jpg")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("D:\\Sports_club\\images\\gym_disks_weight_bodybuilding_118105_1920x1200 (2).jpg")); // NOI18N
         getContentPane().add(jLabel8);
         jLabel8.setBounds(20, 50, 1510, 1050);
 
