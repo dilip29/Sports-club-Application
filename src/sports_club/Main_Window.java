@@ -1,0 +1,574 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package sports_club;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author dell
+ */
+public final class Main_Window extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Main_Window
+     */
+    public Main_Window() {
+        initComponents();
+       getConnection();
+       //Show_database();
+    }
+    
+    public Connection getConnection()
+    {
+           Connection con =null;
+        try {
+            con=DriverManager.getConnection("jdbc:mysql://localhost/sports_club","root","root");
+            //con=DriverManager.getConnection("jdbc:mysql://localhost/sports_club?verifyServerCertificate=false&useSSL=true","root","root");
+            JOptionPane.showMessageDialog(null, "Congratulations you have been sucessfully Connected to the MySql Database !!");
+            return con;
+        } catch (SQLException ex) {
+            Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Sorry not Connected....Try again!!");
+            return null;
+        }
+    }
+ public Connection getConnection1()
+    {
+           Connection con =null;
+        try {
+            con=DriverManager.getConnection("jdbc:mysql://localhost/sports_club","root","root");
+            //con=DriverManager.getConnection("jdbc:mysql://localhost/sports_club?verifyServerCertificate=false&useSSL=true","root","root");
+            //JOptionPane.showMessageDialog(null, "Congratulations you have been sucessfully Connected");
+            return con;
+        } catch (SQLException ex) {
+            Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "ERROR :  Server not responding....Try again!!");
+            return null;
+        }
+    }
+    
+    public boolean checkinputs()
+    {
+        if(txt_id.getText()==null || txt_name.getText()==null ||  txt_gender.getText()==null || txt_dob.getDate()==null  )
+        {
+            return false;
+        }
+        else
+        {
+            try{
+                return true;
+            }catch(Exception ex){
+                return false;
+                
+                
+            }
+        }
+        
+        
+    }
+    
+    
+    
+        public boolean checkinputs1()
+    {
+        if(txt_id.getText()==null || txt_name.getText()==null ||  txt_gender.getText()==null   )
+        {
+            return false;
+        }
+        else
+        {
+            try{
+                return true;
+            }catch(Exception ex){
+                return false;
+                
+                
+            }
+        }
+        
+        
+    }
+        
+    /**
+     *
+     * @return
+     */
+    public  ArrayList<Members> getMemberList(){
+            ArrayList<Members> memberList=new ArrayList<>();
+            Connection con=getConnection1();
+            String query="SELECT * FROM mem";
+            
+            Statement st;
+            ResultSet rs; 
+        try {
+            
+            st=con.createStatement();
+            rs=st.executeQuery(query);
+            Members member;
+            
+            while(rs.next())
+            {
+                member =new Members(rs.getInt("Member_ID"),rs.getString("Member_Name"),rs.getString("Gender"),rs.getString("DOB")) ; 
+                
+                memberList.add(member);
+                  
+            }
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            return memberList;
+        }
+           
+ 
+        
+        public void Show_database(){
+            
+            ArrayList<Members>list=getMemberList();
+            DefaultTableModel model= (DefaultTableModel)JTable_members.getModel();
+            model.setRowCount(0);
+            Object[] row=new Object[4];
+            for(int i=0;i<list.size();i++)
+            {
+                row[0]=list.get(i).getId();
+               row[1]=list.get(i).getName();
+                row[2]=list.get(i).getGender();
+                row[3]=list.get(i).getDob();
+                
+                model.addRow(row);
+                
+            }
+            
+            
+        }
+        
+     
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txt_id = new javax.swing.JTextField();
+        txt_name = new javax.swing.JTextField();
+        txt_gender = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        JTable_members = new javax.swing.JTable();
+        btn_delete = new javax.swing.JButton();
+        btn_insert = new javax.swing.JButton();
+        btn_update = new javax.swing.JButton();
+        txt_dob = new com.toedter.calendar.JDateChooser();
+        btn_view = new javax.swing.JButton();
+        btn_reset = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Sylfaen", 1, 15)); // NOI18N
+        jLabel1.setText("Member_ID");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 64, 79, 33));
+
+        jLabel2.setFont(new java.awt.Font("Sylfaen", 1, 15)); // NOI18N
+        jLabel2.setText("Member_Name");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 126, 110, 27));
+
+        jLabel3.setFont(new java.awt.Font("Sylfaen", 1, 15)); // NOI18N
+        jLabel3.setText("Gender");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 180, 53, 29));
+
+        jLabel4.setFont(new java.awt.Font("Sylfaen", 1, 15)); // NOI18N
+        jLabel4.setText("Date_of_Birth");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 227, -1, 35));
+
+        txt_id.setAlignmentY(1.0F);
+        txt_id.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txt_id.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jPanel1.add(txt_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 120, -1));
+        jPanel1.add(txt_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 120, -1));
+        jPanel1.add(txt_gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 120, -1));
+
+        JTable_members.setBackground(new java.awt.Color(0, 51, 51));
+        JTable_members.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        JTable_members.setFont(new java.awt.Font("Malgun Gothic Semilight", 0, 14)); // NOI18N
+        JTable_members.setForeground(new java.awt.Color(204, 255, 204));
+        JTable_members.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Membr_ID", "Member_Name", "Gender", "DOB"
+            }
+        ));
+        JTable_members.setAlignmentX(1.0F);
+        JTable_members.setAlignmentY(1.0F);
+        jScrollPane1.setViewportView(JTable_members);
+        JTable_members.getAccessibleContext().setAccessibleName("");
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 400, 290));
+
+        btn_delete.setFont(new java.awt.Font("Lucida Sans Typewriter", 1, 14)); // NOI18N
+        btn_delete.setText("Delete");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 390, 80, 30));
+
+        btn_insert.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        btn_insert.setText("Insert");
+        btn_insert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_insertActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_insert, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 120, 30));
+
+        btn_update.setFont(new java.awt.Font("Lucida Sans Typewriter", 1, 14)); // NOI18N
+        btn_update.setText("Update");
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 110, 30));
+
+        txt_dob.setDateFormatString("yyyy-MM-dd");
+        jPanel1.add(txt_dob, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 120, -1));
+
+        btn_view.setFont(new java.awt.Font("Lucida Sans Typewriter", 1, 14)); // NOI18N
+        btn_view.setText("View Database");
+        btn_view.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_viewActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_view, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 390, 150, 30));
+
+        btn_reset.setFont(new java.awt.Font("Lucida Sans Typewriter", 1, 14)); // NOI18N
+        btn_reset.setText("Clear");
+        btn_reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_resetActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 390, 90, 30));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setText("MEMBERS ");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 170, -1));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\dell\\Pictures\\stadium_rugby_american_football_rays_light_81264_1920x1080 (2).jpg")); // NOI18N
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 190, 20));
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(80, 0, 1340, 500);
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_insertActionPerformed
+
+        if(checkinputs() )
+        {
+            
+            try {
+                 Connection con;
+                con = getConnection1();
+                PreparedStatement ps;
+                ps = con.prepareStatement("INSERT INTO mem(Member_ID,Member_Name,Gender,DOB)"+"values(?,?,?,?)");
+                ps.setString(1,txt_id.getText());
+                  ps.setString(2,txt_name.getText());
+                    ps.setString(3,txt_gender.getText());
+                    
+                      SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd");
+                      String dob = dateformat.format(txt_dob.getDate());
+                      ps.setString(4, dob);
+                int executeUpdate = ps.executeUpdate();
+                  Show_database();
+                 JOptionPane.showMessageDialog(null,"Data inserted!!");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,ex.getMessage());
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"One or more fiels is empty..Try entering again!!");
+        }
+// TODO add your handling code here:
+    }//GEN-LAST:event_btn_insertActionPerformed
+
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+
+        if( checkinputs1() )
+        {
+            String UpdateQuery=null;
+            PreparedStatement ps=null;
+            Connection con;
+
+            con = getConnection1();
+            
+             /* if(txt_gender.getText()==null){
+              try {
+                UpdateQuery ="UPDATE mem SET Member_Name=?,DOB=? where Member_ID=?";
+                ps=con.prepareStatement(UpdateQuery);
+                ps.setString(1,txt_name.getText());
+                SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd");
+                      String dob = dateformat.format(txt_dob.getDate());
+                ps.setString(2,dob);
+                ps.setInt(3,Integer.parseInt(txt_id.getText()));
+                ps.executeUpdate();
+                
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             }*/
+             
+            /* 
+            if(txt_dob.getDate()==null){
+              try {
+                UpdateQuery ="UPDATE mem SET Member_Name=?,Gender=? where Member_ID=?";
+                /*
+                String UpdateQuery1=null;
+                PreparedStatement ps1=null;
+                Connection con1 =getConnection();
+                UpdateQuery ="SELECT DOB from mem where Member_ID=?";
+                ps1=con1.prepareStatement(UpdateQuery1);
+                ps1.setString(1, UpdateQuery);
+                */
+            //txt_name.getText()!=null && txt_id.getText()!=null && txt_gender.getText()!=null
+            if(txt_dob.getDate()!=null){
+            try{
+                UpdateQuery ="UPDATE mem SET Member_ID=?, Member_Name=?,Gender=?,DOB=? where Member_ID=?";
+                ps=con.prepareStatement(UpdateQuery);
+                ps.setString(1,txt_id.getText());
+                 ps.setString(2,txt_name.getText());
+                 ps.setString(3,txt_gender.getText());
+                 SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd");
+                      String dob = dateformat.format(txt_dob.getDate());
+                ps.setString(4,dob);
+                ps.setInt(0x5,Integer.parseInt(txt_id.getText()));
+                ps.executeUpdate();
+                Show_database();
+                JOptionPane.showMessageDialog(null,"Data sucessfully updated!!");
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                 
+             
+            
+              
+        }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"ERROR :  You left one or more fields empty!!\n Please fill all the fields");
+            }
+            }
+         else
+        {
+           JOptionPane.showMessageDialog(null,"ERROR  :  You left one or more fields empty!!\n Please fill all the fields");
+        }
+         
+    }//GEN-LAST:event_btn_updateActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+      
+        if( !txt_name.getText().equals("")  )
+        {
+            
+            
+            try {
+                Connection con=getConnection1();
+                PreparedStatement ps;
+                ps = con.prepareStatement("DELETE FROM mem WHERE Member_Name =?");
+                //int id=Integer.parseInt(txt_id.getText());
+                //ps.setInt(1, id);
+                ps.setString(1, txt_name.getText());
+                ps.executeUpdate();
+                  Show_database();
+                 JOptionPane.showMessageDialog(null,"Data successfully deleted!!");
+            } catch (SQLException ex) {
+                Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
+                   JOptionPane.showMessageDialog(null,"Data can't be deleted...try again entering!!!");
+            }
+       
+            
+            
+        }
+        else if(!txt_id.getText().equals("")){
+            try {
+                Connection con=getConnection1();
+                PreparedStatement ps;
+                ps = con.prepareStatement("DELETE FROM mem WHERE Member_ID =?  ");
+                int id=Integer.parseInt(txt_id.getText());
+                ps.setInt(1, id);
+                //ps.setString(2, txt_gender.getText());
+                ps.executeUpdate();
+                  Show_database();
+                 JOptionPane.showMessageDialog(null,"Data successfully deleted!!");
+            } catch (SQLException ex) {
+                Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
+                   JOptionPane.showMessageDialog(null,"Data can't be deleted...try again entering!!!");
+            }
+        }
+        else if(!txt_gender.getText().equals("")){
+            
+            try {
+                Connection con=getConnection1();
+                PreparedStatement ps;
+                ps = con.prepareStatement("DELETE FROM mem WHERE Gender =?  ");
+                //int id=Integer.parseInt(txt_id.getText());
+                //ps.setInt(1, id);
+                ps.setString(1, txt_gender.getText());
+                ps.executeUpdate();
+                  Show_database();
+                 JOptionPane.showMessageDialog(null,"Data successfully deleted!!");
+            } catch (SQLException ex) {
+                Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
+                   JOptionPane.showMessageDialog(null,"Data can't be deleted...try again entering!!!");
+            }
+            
+            
+            
+        }
+        else if(!txt_dob.getDate().equals("")){
+            
+            
+            try {
+                Connection con=getConnection1();
+                PreparedStatement ps;
+                ps = con.prepareStatement("DELETE FROM mem WHERE DOB =?  ");
+                //int id=Integer.parseInt(txt_id.getText());
+                //ps.setInt(1, id);
+                SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd");
+                      String dob = dateformat.format(txt_dob.getDate());
+                ps.setString(1, dob);
+                ps.executeUpdate();
+                  Show_database();
+                 JOptionPane.showMessageDialog(null,"Data successfully deleted!!");
+            } catch (SQLException ex) {
+                Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
+                   JOptionPane.showMessageDialog(null,"Data can't be deleted...try again entering!!!");
+            }
+        }
+            
+        else{
+            JOptionPane.showMessageDialog(null,"Data can't be deleted...fields are empty!!!");
+        }
+            
+        
+        
+        
+    }//GEN-LAST:event_btn_deleteActionPerformed
+
+    private void btn_viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_viewActionPerformed
+       Show_database();
+    }//GEN-LAST:event_btn_viewActionPerformed
+
+    private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
+    txt_id.setText("");
+    txt_name.setText("");
+    txt_gender.setText("");
+    txt_dob.setDate(null);
+    
+    }//GEN-LAST:event_btn_resetActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Main_Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Main_Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Main_Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Main_Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            
+            //System.out.println("main window launched");
+            Login obj1;
+           obj1 = new Login();
+            obj1.setVisible(true);
+            
+            /*
+            selection obj2;
+            obj2=new selection();
+            obj2.setVisible((true));
+            //obj1.setVisible(false);
+              */      
+            //new Main_Window().setVisible(true);
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable JTable_members;
+    private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_insert;
+    private javax.swing.JButton btn_reset;
+    private javax.swing.JButton btn_update;
+    private javax.swing.JButton btn_view;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private com.toedter.calendar.JDateChooser txt_dob;
+    private javax.swing.JTextField txt_gender;
+    private javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_name;
+    // End of variables declaration//GEN-END:variables
+}
